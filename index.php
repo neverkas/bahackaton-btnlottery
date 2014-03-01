@@ -1,12 +1,12 @@
 <?php
 require_once "Game.php";
-include_once 'firebaseConfig.inc.php';
-require_once 'firebase/firebaseLib.php';
+//include_once 'firebaseConfig.inc.php';
+//require_once 'firebase/firebaseLib.php';
 
 $bets = Game::getBets();
 
-$firebaseConn = new firebase(FIREBASE_URL, FIREBASE_TOKEN);
-$response = $firebaseConn->set(date("YmdH"), $bets);
+//$firebaseConn = new firebase(FIREBASE_URL, FIREBASE_TOKEN);
+//$response = $firebaseConn->set(date("YmdH"), $bets);
 
 //$response = $firebaseConn->get(date("YmdH"));
 ?>
