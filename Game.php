@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('UTC');
 
 class Game {
 
@@ -9,8 +10,13 @@ class Game {
 
     static function getBets(){
         $json = self::getWalletData();
+        $startTime = self::getGameStartTime();
+        $endTime = self::getGameTimeLimit();
 
         foreach($json->txs as $tx){
+            if($tx->time > $endTime || $tx->time < $startTime){
+                continue;
+            }
             $txid = $tx->hash;
             $address = $tx->inputs[0]->prev_out->addr;
             $amount = 0;
@@ -112,7 +118,12 @@ class Game {
         foreach($json->blocks as $i => $block){
             if($block->time < $blockTime && $i != 0){
                 $nextBlock = $json->blocks[$i-1];
-                return self::getNumberFromHash($nextBlock->hash);
+                $response = array(
+                    "number"=>self::getNumberFromHash($nextBlock->hash),
+                    "hash"=>$nextBlock->hash,
+                    "height"=>$nextBlock->height
+                );
+                return $response;
             }
         }
 

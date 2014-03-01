@@ -2,4 +2,5 @@
 
 require_once "config.php";
 require_once "Game.php";
-echo Game::getWinningNumber();
+print_r(Game::getWinningNumber());
+echo Game::getLastBlockTime();
