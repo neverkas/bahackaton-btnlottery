@@ -1,6 +1,10 @@
 <?php
+
     require_once "Game.php";
+    require_once "config.php";
     $bets = Game::getBets();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>BTC Lottery</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -29,7 +33,7 @@
   </head>
 
   <body>
-<div id="wrap">
+  <div id="wrap">
 		<!-- Navbar -->
 		<div class="navbar navbar-default navbar-inverse navbar-fixed-top">
 			 <div class="container">

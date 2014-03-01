@@ -4,6 +4,8 @@ class Game {
 
     const URL = "https://blockchain.info/address/";
     const ADDRESS = "1B12NKx9PRTtgXWvFdzD6ZgYrRMY4dCwQw";
+    const HOUR_OF_GAME = "16";
+    const MINUTE_OF_GAME = "30";
 
     static function getBets(){
         $json = self::getWalletData();
@@ -13,7 +15,7 @@ class Game {
             $address = $tx->inputs[0]->prev_out->addr;
             $amount = 0;
             foreach($tx->out as $outTx){
-                if($outTx->addr == SELF::ADDRESS){
+                if($outTx->addr == self::ADDRESS){
                     $amount += $outTx->value;
                 }
             }
@@ -29,12 +31,40 @@ class Game {
         return $bets;
     }
 
-    public function getGameTimeLimit(){
-        $time = strtotime("today at 6pm");
+    static function getGameTimeLimit(){
+        $day = self::isToday() ? "today" : "tomorrow";
+        $hour = self::HOUR_OF_GAME - 1;
+        $time = $hour.":".self::MINUTE_OF_GAME.":00";
+        return strtotime("$day $time");
     }
 
-    public function getGameStartTime(){
-        $time = strtotime("yesterday at 6pm");
+    static function getBlockTime(){
+        $day = self::isToday() ? "today" : "tomorrow";
+        $hour = self::HOUR_OF_GAME;
+        $time = $hour.":".self::MINUTE_OF_GAME.":00";
+        return strtotime("$day $time");
+    }
+
+    static function getLastBlockTime(){
+        $day = self::isToday() ? "yesterday" : "today";
+        $hour = self::HOUR_OF_GAME;
+        $time = $hour.":".self::MINUTE_OF_GAME.":00";
+        return strtotime("$day $time");
+    }
+
+    static function getGameStartTime(){
+        $day = self::isToday() ? "yesterday" : "today";
+        $hour = self::HOUR_OF_GAME -1;
+        $time = $hour.":".self::MINUTE_OF_GAME.":00";
+        return strtotime("$day $time");
+    }
+
+    static function getCurrentHour(){
+        return date("H");
+    }
+
+    static function isToday(){
+        return date("H") <= self::HOUR_OF_GAME  && date("i") <= self::MINUTE_OF_GAME;
     }
 
     static function getNumberFromHash($txid){
@@ -60,11 +90,30 @@ class Game {
 
     static function getWalletData(){
         $bets = array();
-        $url = self::URL . self::ADDRESS ." ?format=json";
+        $url = self::URL . self::ADDRESS ."?format=json";
         $content = file_get_contents($url);
         $json = json_decode($content);
 
         return $json;
+    }
+
+    static function getWinningNumber(){
+        $_json = file_get_contents("http://blockchain.info/blocks/0?format=json");
+        $json = json_decode($_json);
+        $blockTime = self::getLastBlockTime();
+
+        if($json->blocks[0]->time < $blockTime){
+            throw new Exception();
+        }
+
+        foreach($json->blocks as $i => $block){
+            if($block->time < $blockTime && $i != 0){
+                $nextBlock = $json->blocks[$i-1];
+                return self::getNumberFromHash($nextBlock->hash);
+            }
+        }
+
+        return 0;
     }
 
 } 
