@@ -2,7 +2,7 @@
 
 class Game {
 
-    const URL = "https://blockchain.info/address/";
+    const URL = "http://blockchain.info/address/";
     const ADDRESS = "1B12NKx9PRTtgXWvFdzD6ZgYrRMY4dCwQw";
     const HOUR_OF_GAME = "16";
     const MINUTE_OF_GAME = "30";
@@ -68,7 +68,10 @@ class Game {
     }
 
     static function getNumberFromHash($txid){
-        return $txid % 100;
+        $hash_to_number = CRC32($txid);
+        $resto = abs($hash_to_number % 100);
+
+        return $resto;
     }
 
     static function getHouseProfit(){

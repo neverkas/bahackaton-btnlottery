@@ -1,10 +1,14 @@
 <?php
+require_once "Game.php";
+include_once 'firebaseConfig.inc.php';
+require_once 'firebase/firebaseLib.php';
 
-    require_once "Game.php";
-    require_once "config.php";
-    $bets = Game::getBets();
+$bets = Game::getBets();
 
+$firebaseConn = new firebase(FIREBASE_URL, FIREBASE_TOKEN);
+$response = $firebaseConn->set(date("YmdH"), $bets);
 
+//$response = $firebaseConn->get(date("YmdH"));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +19,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>BTC Lottery</title>
+    <title>Starter Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -33,7 +37,7 @@
   </head>
 
   <body>
-  <div id="wrap">
+<div id="wrap">
 		<!-- Navbar -->
 		<div class="navbar navbar-default navbar-inverse navbar-fixed-top">
 			 <div class="container">
@@ -96,12 +100,20 @@
                             <th>Wallet</th>
                             <th>Tx</th>
                             <th>Amount</th>
-                            <th>Confirmations</th>
                             <th>Number</th>
                         </tr>
                         </thead>
+                        <?php
+                            foreach($bets as $bet){
+                                echo "<tr>";
+                                foreach($bet as $value){
+                                    echo "<th>" . $value . "</th>";
+                                }
+                                echo "</tr>";
+                            }
+                        ?>
                         <tbody>
-                                                </tbody>
+                         </tbody>
                     </table>
                 </div>
             </div>
