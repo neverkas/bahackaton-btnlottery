@@ -128,7 +128,7 @@ $winner = Game::getWinningNumber();
                     <div class="row">
                         <div class="col-md-4">
                             <img src="https://blockchain.info/qr?data=bitcoin:1B12NKx9PRTtgXWvFdzD6ZgYrRMY4dCwQw" style="width:100%" />
-                            <h4>1B12NKx9PRTtgXWvFdzD6ZgYrRMY4dCwQw</h4>
+                            <h4><a href='https://blockchain.info/address/1B12NKx9PRTtgXWvFdzD6ZgYrRMY4dCwQw'>1B12NKx9PRTtgXWvFdzD6ZgYrRMY4dCwQw</a></h4>
                         </div>
                         <div class="col-md-8">
                             <h4 style="text-align:center">How to get your lottery Number</h4>
@@ -140,7 +140,7 @@ $winner = Game::getWinningNumber();
                             </div>
                             <div>
                                 <h3>Yesterday number: <?php echo $winner["number"] ?></h3>
-                                <h3 style="font-size:16px">Yesterday block: <?php echo $winner["hash"] ?></h3>
+                                <h3 style="font-size:16px">Yesterday block: <a href="https://blockchain.info/block/<?php echo $winner["hash"] ?>"><?php echo $winner["hash"] ?></a></h3>
                                 <h3>The Winners of yesterday: </h3>
                                 <table class="table table-list-search">
                                     <thead>
@@ -153,8 +153,8 @@ $winner = Game::getWinningNumber();
                                     </thead>
                                     <tbody>
                                     <tr style="font-size:12px;">
-                                        <td>1Kc6W44Ng71M1STK211xyCUyy5UDy5HqXf</td>
-                                        <td>c02c8e889b3a941c76f8ab6d299bd37f8274e3aa196ed0a09d487b8a1375d108</td>
+                                        <td><a href='https://blockchain.info/address/1Kc6W44Ng71M1STK211xyCUyy5UDy5HqXf'>1Kc6W44Ng71M1STK211xyCUyy5UDy5HqXf</a></td>
+                                        <td><a href='https://blockchain.info/tx/c02c8e889b3a941c76f8ab6d299bd37f8274e3aa196ed0a09d487b8a1375d108'>c02c8e889b3a941c76f8ab6d299bd37f8274e3aa196ed0a09d487b8a1375d108</a></td>
                                         <td>0.001</td>
                                         <td>99</td>
                                     </tr>
