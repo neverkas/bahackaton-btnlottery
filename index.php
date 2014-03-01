@@ -1,3 +1,7 @@
+<?php
+    require_once "Game.php";
+    $bets = Game::getBets();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
