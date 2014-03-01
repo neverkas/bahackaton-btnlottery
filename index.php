@@ -1,6 +1,6 @@
 <?php
 require_once "Game.php";
-
+$winner = Game::getWinningNumber();
 //$response = $firebaseConn->get(date("YmdH"));
 ?>
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ require_once "Game.php";
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>BTC Lottery</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -51,18 +51,20 @@ require_once "Game.php";
                     var pozo = 0;
                     obj.forEach(function(value){
                         html += "<tr>";
-                        html += "<td>" + value.address + "</td>";
-                        html += "<td>" + value.txid + "</td>";
+                        html += "<td><a href='https://blockchain.info/address/"+value.address+"'>" + value.address + "</a></td>";
+                        html += "<td><a href='https://blockchain.info/tx/"+value.txid+"'>" + value.txid + "</a></td>";
                         html += "<td>" + value.amount/100000000 + "</td>";
                         html += "<td>" + value.number + "</td>";
                         html += "</tr>";
                         pozo += value.amount;
                     });
 
-                    $("#totalpot").html(pozo/100000000);
-                    $("#lotterypot").html(pozo/100000000*0.4);
-                    $("#charity").html(pozo/100000000*0.5);
-                    $("#profit").html(pozo/100000000*0.1);
+                    pozo = pozo/100000000;
+
+                    $("#totalpot").html(pozo.toFixed(4));
+                    $("#lotterypot").html((pozo*0.4).toFixed(4));
+                    $("#charity").html((pozo*0.5).toFixed(4));
+                    $("#profit").html((pozo*0.1).toFixed(4));
                     $("#tablelist").html(html);
                 }
             });
@@ -78,6 +80,11 @@ require_once "Game.php";
         }
 
     </script>
+    <style>
+        .lottery-totals h3{
+            font-size: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -132,7 +139,9 @@ require_once "Game.php";
                                 <p>4) This is your number for the lottery </p>
                             </div>
                             <div>
-                                <h3>The Winners of yesterday:</h3>
+                                <h3>Yesterday number: <?php echo $winner["number"] ?></h3>
+                                <h3 style="font-size:16px">Yesterday block: <?php echo $winner["hash"] ?></h3>
+                                <h3>The Winners of yesterday: </h3>
                                 <table class="table table-list-search">
                                     <thead>
                                     <tr>
@@ -143,18 +152,23 @@ require_once "Game.php";
                                     </tr>
                                     </thead>
                                     <tbody>
-
+                                    <tr style="font-size:12px;">
+                                        <td>1Kc6W44Ng71M1STK211xyCUyy5UDy5HqXf</td>
+                                        <td>c02c8e889b3a941c76f8ab6d299bd37f8274e3aa196ed0a09d487b8a1375d108</td>
+                                        <td>0.001</td>
+                                        <td>99</td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row lottery-totals">
                         <div class="col-md-3">
-                            <h3 style="color: green;">Pot: <span id="totalpot" style="color: red; font-weigth: bold;"></span> BTC</h3>
+                            <h3 style="color: green;">Jackpot: <span id="totalpot" style="color: red; font-weigth: bold;"></span> BTC</h3>
                         </div>
                         <div class="col-md-3">
-                            <h3 style="color: green;">Lottery Pot: <span id="lotterypot" style="color: red; font-weigth: bold;"></span> BTC</h3>
+                            <h3 style="color: green;">Lottery Jackpot: <span id="lotterypot" style="color: red; font-weigth: bold;"></span> BTC</h3>
                         </div>
                         <div class="col-md-3">
                             <h3 style="color: green;">Charity: <span id="charity" style="color: red; font-weigth: bold;"></span> BTC</h3>

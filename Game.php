@@ -5,7 +5,7 @@ class Game {
 
     const URL = "http://blockchain.info/address/";
     const ADDRESS = "1B12NKx9PRTtgXWvFdzD6ZgYrRMY4dCwQw";
-    const HOUR_OF_GAME = "16";
+    const HOUR_OF_GAME = "13";
     const MINUTE_OF_GAME = "30";
 
     static function getBets(){
