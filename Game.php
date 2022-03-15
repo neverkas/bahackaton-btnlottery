@@ -112,7 +112,7 @@ class Game {
         $blockTime = self::getLastBlockTime();
 
         if($json->blocks[0]->time < $blockTime){
-            throw new Exception();
+            //throw new Exception();
         }
 
         foreach($json->blocks as $i => $block){
